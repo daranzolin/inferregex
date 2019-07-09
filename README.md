@@ -11,7 +11,7 @@ with other features–of a string.
 You can install `inferregex` from GitHub with:
 
 ``` r
-remotes::install_github("inferregex")
+remotes::install_github("daranzolin/inferregex")
 ```
 
 ## Example 1
