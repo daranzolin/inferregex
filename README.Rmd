@@ -1,0 +1,44 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# inferregex
+
+The goal of inferregex is to infer the regular expression (regex)--along with other features--of a string.
+
+## Installation
+
+You can install `inferregex` from GitHub with:
+
+``` r
+remotes::install_github("inferregex")
+```
+
+## Example 1
+
+```{r}
+library(inferregex)
+s <- "abcd-9999-ab9"
+infer_regex(s)$regex
+```
+
+
+## Example 2
+
+```{r warning=FALSE}
+library(purrr)
+
+(regex_df <- map_dfr(rownames(mtcars), infer_regex))
+all(map2_lgl(regex_df$string, regex_df$regex, ~grepl(.y, .x)))
+```
+

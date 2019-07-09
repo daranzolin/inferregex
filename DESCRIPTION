@@ -1,0 +1,15 @@
+Package: inferregex
+Title: Infer the regular expression (regex) from a string
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "David",
+           family = "Ranzolin",
+           role = c("aut", "cre"),
+           email = "daranzolin@gmail.com")
+Description: Infer the regular expression (regex) and other text features from a string
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    purrr
+RoxygenNote: 6.1.1
