@@ -17,6 +17,6 @@ Infer the regular expression (regex) and other features of a string
 }
 \examples{
 library(purrr)
-regex_df <- map_dfr(rownames(mtcars), infer_regex))
+regex_df <- map_dfr(rownames(mtcars), infer_regex)
 all(map2_lgl(regex_df$string, regex_df$regex, ~grepl(.y, .x)))
 }

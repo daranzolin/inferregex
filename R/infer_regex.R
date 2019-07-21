@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' library(purrr)
-#' regex_df <- map_dfr(rownames(mtcars), infer_regex))
+#' regex_df <- map_dfr(rownames(mtcars), infer_regex)
 #' all(map2_lgl(regex_df$string, regex_df$regex, ~grepl(.y, .x)))
 infer_regex <- function(x) {
 
@@ -36,9 +36,14 @@ infer_regex <- function(x) {
   nupper <- sum(grepl("L", r))
   ndigits <- sum(grepl("d", r))
   nwhite <- sum(grepl("w", r))
-  rl <- rle(r)
+  # adapted from base::rle
+  l <- length(r)
+  bool_streaks <- r[-1L] != r[-l]
+  i <- c(which(bool_streaks | is.na(bool_streaks)), l)
+  s_lengths <- diff(c(0L, i))
+  s_values <- r[i]
 
-  purrr::walk2(rl$values, rl$lengths, ~{
+  purrr::walk2(s_values, s_lengths, ~{
     if (.x == "l") {
       r_out <<- paste0(r_out, sprintf("[a-z]{%d}", .y))
     } else if (.x == "L") {
@@ -56,13 +61,13 @@ infer_regex <- function(x) {
 
   r_out <- paste0("^", gsub("\\{1}", "", r_out), "$")
   out <- data.frame(string = x,
-             regex = r_out,
-             nchars,
-             nlower,
-             nupper,
-             ndigits,
-             nwhite,
-             stringsAsFactors = FALSE
-             )
+                    regex = r_out,
+                    nchars,
+                    nlower,
+                    nupper,
+                    ndigits,
+                    nwhite,
+                    stringsAsFactors = FALSE
+  )
   out
 }
